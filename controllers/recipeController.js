@@ -60,13 +60,10 @@ const getRecipes = async (req, res) => {
         }
 
         if (minCalories != null && maxCalories != null) {
-            console.log('minCalories', minCalories);
-            console.log('maxCalories', maxCalories);
             query['nutritionalValues.calories'] = { $gte: minCalories, $lte: maxCalories };
         }
 
         if (maxTotalFat != null) {
-            console.log('maxTotalFat', maxTotalFat);
             query['nutritionalValues.totalFat'] = { $lte: maxTotalFat };
         }
 

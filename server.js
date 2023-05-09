@@ -12,7 +12,9 @@ const app = express()
 
 // Middleware to parse JSON request bodies
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: [ 'http://localhost:3000', 'https://dishcover.onrender.com/'], 
+}))
 
 // Middleware to log incoming requests
 const loggerMiddleware = (req, res, next) => {
@@ -24,8 +26,8 @@ const loggerMiddleware = (req, res, next) => {
 app.use(loggerMiddleware)
 
 // Register the routes
-app.use('/recipes', cors(), searchRoutes) // Use the searchRoutes router
-app.use('/api/user', cors(), userRoutes) // Use the userRoutes router
+app.use('/recipes', searchRoutes) // Use the searchRoutes router
+app.use('/api/user', userRoutes) // Use the userRoutes router
 
 
 // Set 'strictQuery' to false to suppress deprecation warning
@@ -37,7 +39,7 @@ mongoose.connect(process.env.MONGO_URI)
 
     // Listen for requests
     app.listen(process.env.PORT, () => {
-      console.log('Connected to MongoDB & listening on port', process.env.PORT)
+      console.log("Connected to MongoDB")
     })
   })
   .catch((error) => {
